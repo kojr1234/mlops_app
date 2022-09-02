@@ -3,10 +3,7 @@ from my_app.schemas import Health
 from classifier_model import __version__ as model_version
 from my_app import __version__
 from fastapi.testclient import TestClient
-
-import logging
-
-logger = logging.getLogger('Test')
+from loguru import logger
 
 def test_api_health_output(client: TestClient) -> None:
     response = client.get(
@@ -16,7 +13,7 @@ def test_api_health_output(client: TestClient) -> None:
     status_code = response.status_code
     response_dict = response.json()
 
-    logging.info(f"Request status code: {status_code}")
+    logger.info(f"Test health: request status code: {status_code}")
 
     assert status_code == 200
     assert response_dict.get('api_version') == __version__
