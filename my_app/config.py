@@ -26,7 +26,7 @@ class Settings(BaseSettings):
         'http://localhost:3400',
         'http://localhost:8400',
         'https://localhost:3400',
-        'https://localhost:8400',
+        'https://localhost:8400'
     ]
 
     PROJECT_NAME: str = 'Spaceship Titanic API'

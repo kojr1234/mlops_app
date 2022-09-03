@@ -3,5 +3,5 @@ loguru==0.6.0
 numpy==1.23.2
 pandas==1.4.3
 pydantic==1.9.2
-spaceship_titanic_classif_model==1.0.3
+spaceship_titanic_classif_model==1.0.8
 uvicorn==0.18.3

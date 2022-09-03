@@ -1,4 +1,3 @@
-
 from email.generator import Generator
 import pandas as pd
 import pytest
