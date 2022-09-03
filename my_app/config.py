@@ -1,38 +1,40 @@
 import logging
 import sys
-
+from pathlib import Path
 from types import FrameType
 from typing import List, cast
 
 from loguru import logger
-from pydantic import AnyHttpUrl, BaseSettings
+from pydantic import BaseSettings
 
-from pathlib import Path
 import my_app
 
 PACKAGE_ROOT = Path(my_app.__file__).resolve().parent
 ROOT = PACKAGE_ROOT.parent
 LOGS_DIR = ROOT / "logs"
 
+
 class LoggingSettings(BaseSettings):
     LOGGING_LEVEL: int = logging.INFO
 
+
 class Settings(BaseSettings):
-    API_V1_STR: str = '/api/v1'
+    API_V1_STR: str = "/api/v1"
 
     logging: LoggingSettings = LoggingSettings()
 
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
-        'http://localhost:3400',
-        'http://localhost:8400',
-        'https://localhost:3400',
-        'https://localhost:8400'
+    BACKEND_CORS_ORIGINS: List[str] = [
+        "http://localhost:3400",
+        "http://localhost:8400",
+        "https://localhost:3400",
+        "https://localhost:8400",
     ]
 
-    PROJECT_NAME: str = 'Spaceship Titanic API'
+    PROJECT_NAME: str = "Spaceship Titanic API"
 
     class Config:
         case_sensitive = True
+
 
 class InterceptHandler(logging.Handler):
     def emit(self, record: logging.LogRecord) -> None:  # pragma: no cover
@@ -53,10 +55,11 @@ class InterceptHandler(logging.Handler):
             record.getMessage(),
         )
 
+
 def setup_app_logging(config: Settings) -> None:
     """Prepare custom logging for our application"""
 
-    LOGGERS = ('uvicorn.asgi', 'uvicorn.access')
+    LOGGERS = ("uvicorn.asgi", "uvicorn.access")
     logging.getLogger().handlers = [InterceptHandler()]
 
     for logger_name in LOGGERS:
@@ -64,7 +67,8 @@ def setup_app_logging(config: Settings) -> None:
         logging_logger.handlers = [InterceptHandler(level=config.logging.LOGGING_LEVEL)]
 
     logger.configure(
-        handlers=[{'sink':sys.stderr, 'level': config.logging.LOGGING_LEVEL}]
+        handlers=[{"sink": sys.stderr, "level": config.logging.LOGGING_LEVEL}]
     )
+
 
 settings = Settings()
