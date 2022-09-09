@@ -36,7 +36,7 @@ jobs:
 workflows:
   my-custom-workflow:
     jobs:
-      test-app
+      - test-app
       - deploy-app:
           requires:
           - test-app
