@@ -29,7 +29,8 @@ def health() -> dict:
 
     return health.dict()
 
-# Removing performance because this shouldnt be here 
+
+# Removing performance because this shouldnt be here
 # (this should be evaluated on the model development)
 # @api_router.get(
 #     "/performance", response_model=schemas.PerformanceCheck, status_code=200

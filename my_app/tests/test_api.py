@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 from classifier_model import __version__ as model_version
-from classifier_model.config.core import config
+
+# from classifier_model.config.core import config
 from fastapi.testclient import TestClient
 from loguru import logger
 
@@ -19,6 +20,7 @@ def test_api_health_output(client: TestClient) -> None:
     assert status_code == 200
     assert response_dict.get("api_version") == __version__
     assert response_dict.get("model_version") == model_version
+
 
 # I am removing this test because the performance output should not be
 # a concern inside the web application
