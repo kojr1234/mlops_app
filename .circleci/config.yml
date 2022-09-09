@@ -40,9 +40,9 @@ workflows:
   my-custom-workflow:
     jobs:
       - install-tox
-      - test-app
+      - test-app:
         requires: 
           - install-tox
-      - deploy-app
+      - deploy-app:
         requires:
           - test-app
