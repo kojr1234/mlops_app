@@ -20,19 +20,20 @@ def test_api_health_output(client: TestClient) -> None:
     assert response_dict.get("api_version") == __version__
     assert response_dict.get("model_version") == model_version
 
+# I am removing this test because the performance output should not be
+# a concern inside the web application
+# def test_api_performance_output(client: TestClient) -> None:
+#     response = client.get("http://localhost:8001/api/v1/performance")
 
-def test_api_performance_output(client: TestClient) -> None:
-    response = client.get("http://localhost:8001/api/v1/performance")
+#     status_code = response.status_code
+#     response_dict = response.json()
 
-    status_code = response.status_code
-    response_dict = response.json()
+#     logger.info(f"Test performance: request status code: {status_code}")
 
-    logger.info(f"Test performance: request status code: {status_code}")
-
-    assert status_code == 200
-    assert response_dict.get("model_version") == model_version
-    assert response_dict.get("metric_name") == config.model_config.metric
-    assert response_dict.get("metric_val") >= 0.75
+#     assert status_code == 200
+#     assert response_dict.get("model_version") == model_version
+#     assert response_dict.get("metric_name") == config.model_config.metric
+#     assert response_dict.get("metric_val") >= 0.75
 
 
 def test_api_prediction(client: TestClient, test_data: pd.DataFrame):
