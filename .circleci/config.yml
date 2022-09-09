@@ -5,22 +5,19 @@ executors:
       - image: cimg/python:3.9.12
     working_directory: ~/project
 
-jobs:
-  install-tox:
-    executor: my-custom-executor
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: Install Tox
-          command: |
-            pip install tox
+prepare_tox: &prepare_tox
+  run:
+    name: Installing tox
+    command: |
+      pip install --user tox
 
+jobs:
   test-app:
     executor: my-custom-executor
     steps:
       - checkout:
           path: ~/project
+      - *prepare_tox
       - run:
           name: Test app
           command: |
