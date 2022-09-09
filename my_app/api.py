@@ -30,33 +30,35 @@ def health() -> dict:
     return health.dict()
 
 
-@api_router.get(
-    "/performance", response_model=schemas.PerformanceCheck, status_code=200
-)
-def performance() -> dict:
-    """
-    Get models performance
-    """
-    from classifier_model.config.core import config
-    from classifier_model.predict import make_prediction
-    from classifier_model.preprocessing.data_manager import load_dataset
-    from sklearn.metrics import accuracy_score
+# Removing performance because this shouldnt be here
+# (this should be evaluated on the model development)
+# @api_router.get(
+#     "/performance", response_model=schemas.PerformanceCheck, status_code=200
+# )
+# def performance() -> dict:
+#     """
+#     Get models performance
+#     """
+#     from classifier_model.config.core import config
+#     from classifier_model.predict import make_prediction
+#     from classifier_model.preprocessing.data_manager import load_dataset
+#     from sklearn.metrics import accuracy_score
 
-    test_df = load_dataset(file_name=config.app_config.test_data)
+#     test_df = load_dataset(file_name=config.app_config.test_data)
 
-    results = make_prediction(input_data=test_df)
+#     results = make_prediction(input_data=test_df)
 
-    if not results["errors"]:
-        preds = results["predictions"]
-        val = accuracy_score(test_df[config.model_config.target], preds)
+#     if not results["errors"]:
+#         preds = results["predictions"]
+#         val = accuracy_score(test_df[config.model_config.target], preds)
 
-    perf = schemas.PerformanceCheck(
-        model_version=model_version,
-        metric_name=config.model_config.metric,
-        metric_val=val,
-    )
+#     perf = schemas.PerformanceCheck(
+#         model_version=model_version,
+#         metric_name=config.model_config.metric,
+#         metric_val=val,
+#     )
 
-    return perf.dict()
+#     return perf.dict()
 
 
 @api_router.post("/predict", response_model=schemas.ModelOutput, status_code=200)
