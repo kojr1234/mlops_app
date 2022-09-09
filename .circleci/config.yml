@@ -41,8 +41,8 @@ workflows:
     jobs:
       - install-tox
       - test-app:
-        requires: 
+          requires: 
           - install-tox
       - deploy-app:
-        requires:
+          requires:
           - test-app
