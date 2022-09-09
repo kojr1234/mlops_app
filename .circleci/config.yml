@@ -1,0 +1,44 @@
+version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/python:3.9.12
+    working_directory: ~/project
+
+jobs:
+  install-tox:
+    executor: my-custom-executor
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Install Tox
+          command: |
+            pip install tox
+
+  test-app:
+    executor: my-custom-executor
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Test app
+          command: |
+            tox
+  
+  deploy-app:
+    executor: my-custom-executor
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Deploy app to heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+
+workflows:
+  my-custom-workflow:
+    jobs:
+      - install-tox
+      - test-app
+      - deploy-app
