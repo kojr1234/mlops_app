@@ -1,4 +1,4 @@
---index-url $PIP_EXTRA_INDEX_URL
+--extra-index-url=${PIP_EXTRA_INDEX_URL}
 
 fastapi==0.81.0
 loguru==0.6.0
