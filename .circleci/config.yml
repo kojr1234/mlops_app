@@ -44,15 +44,15 @@ jobs:
             # download heroku cli and execute it
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             echo $(ls)
-            cd project && make build-ml-api-heroku
+            make build-ml-api-heroku
       - run:
           name: Push image to Heroku Registry
           command: |
-            cd project && make push-ml-api-heroku
+            make push-ml-api-heroku
       - run:
           name: Release to Heroku
           command: |
-            cd project && make release-ml-api-heroku
+            make release-ml-api-heroku
 
 workflows:
   my-custom-workflow:
