@@ -59,14 +59,14 @@ jobs:
 workflows:
   my-custom-workflow:
     jobs:
-      # - test-app
-      # - deploy-app:
-      #     requires:
-      #     - test-app
-      #     filters:
-      #       branches:
-      #         only:
-      #           - main
+      - test-app
+      - deploy-app:
+          requires:
+          - test-app
+          filters:
+            branches:
+              only:
+                - main
       - deploy-app-container:
           filters:
             branches:
