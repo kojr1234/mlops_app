@@ -33,6 +33,26 @@ jobs:
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
 
+  deploy-app-container:
+    executor: my-custom-executor
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Build Docker Image
+          command: |
+            # download heroku cli and execute it
+            sudo curl https://cli-assets.heroku.com/install.sh | sh 
+            cd project && make build-ml-api-heroku
+      - run:
+          name: Push image to Heroku Registry
+          command: |
+            cd project && make push-ml-api-heroku
+      - run:
+          name: Release to Heroku
+          command: |
+            cd project && make release-ml-api-heroku
+
 workflows:
   my-custom-workflow:
     jobs:
@@ -40,3 +60,13 @@ workflows:
       - deploy-app:
           requires:
           - test-app
+          filters:
+            branches:
+              only:
+                - main
+      - deploy-app-container:
+          filters:
+            branches:
+              only:
+                - main
+      
