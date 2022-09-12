@@ -45,7 +45,6 @@ jobs:
           command: |
             # download heroku cli and execute it
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
-            echo $(ls)
             make build-ml-api-heroku
       - run:
           name: Push image to Heroku Registry
@@ -67,9 +66,9 @@ workflows:
             branches:
               only:
                 - main
-      - deploy-app-container:
-          filters:
-            branches:
-              only:
-                - main
+      # - deploy-app-container:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
       
