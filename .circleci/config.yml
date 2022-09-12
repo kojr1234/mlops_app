@@ -36,6 +36,8 @@ jobs:
   deploy-app-container:
     executor: my-custom-executor
     steps:
+      - setup_remote_docker:
+        version: 20.10.17
       - checkout:
           path: ~/project
       - run:
