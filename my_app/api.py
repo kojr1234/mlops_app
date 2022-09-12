@@ -24,7 +24,10 @@ def health() -> dict:
     Root get
     """
     health = schemas.Health(
-        name=settings.PROJECT_NAME, api_version=__version__, model_version=model_version, my_text="This app was deployed via Docker"
+        name=settings.PROJECT_NAME,
+        api_version=__version__,
+        model_version=model_version,
+        my_text="This app was deployed via Docker",
     )
 
     return health.dict()
