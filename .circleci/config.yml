@@ -72,7 +72,7 @@ workflows:
       #           - main
       - deploy-app-container:
           requires:
-            - test-app
+          - test-app
           filters:
             branches:
               only:
