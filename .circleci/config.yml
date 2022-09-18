@@ -11,7 +11,7 @@ prepare_tox: &prepare_tox
     command: |
       pip install --user tox
 
-jobs:
+jobs:     
   test-app:
     executor: my-custom-executor
     steps:
@@ -58,6 +58,10 @@ jobs:
 workflows:
   my-custom-workflow:
     jobs:
+      # forget about it... I used py39 new features 
+      # in the classifier model...
+      # - pred-test-py37
+      # - pred-test-py38
       - test-app
       # - deploy-app:
       #     requires:
