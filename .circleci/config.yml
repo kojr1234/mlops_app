@@ -94,7 +94,7 @@ workflows:
       # in the classifier model...
       # - pred-test-py37
       # - pred-test-py38
-      - test-app:
+      - test-app
           # requires:
           # - pred-test-py37
           # - pred-test-py38
