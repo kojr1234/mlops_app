@@ -5,45 +5,13 @@ executors:
       - image: cimg/python:3.9.12
     working_directory: ~/project
 
-  python38:
-    docker:
-      - image: cimg/python:3.8.14
-    working_directory: ~/project
-
-  python37:
-    docker:
-      - image: cimg/python:3.7.14
-    working_directory: ~/project
-
 prepare_tox: &prepare_tox
   run:
     name: Installing tox
     command: |
       pip install --user tox
 
-jobs:   
-  pred-test-py37:
-    executor: python37
-    steps:
-      - checkout:
-          path: ~/project
-      - *prepare_tox
-      - run:
-          name: Get sample prediction using python3.8
-          command: |
-            tox -e pred_sample
-  
-  pred-test-py38:
-    executor: python38
-    steps:
-      - checkout:
-          path: ~/project
-      - *prepare_tox
-      - run:
-          name: Get sample prediction using python3.8
-          command: |
-            tox -e pred_sample
-  
+jobs:     
   test-app:
     executor: my-custom-executor
     steps:
@@ -94,10 +62,7 @@ workflows:
       # in the classifier model...
       # - pred-test-py37
       # - pred-test-py38
-      - test-app:
-          # requires:
-          # - pred-test-py37
-          # - pred-test-py38
+      - test-app
       # - deploy-app:
       #     requires:
       #     - test-app
