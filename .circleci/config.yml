@@ -90,12 +90,14 @@ jobs:
 workflows:
   my-custom-workflow:
     jobs:
-      - pred-test-py37
-      - pred-test-py38
+      # forget about it... I used py39 new features 
+      # in the classifier model...
+      # - pred-test-py37
+      # - pred-test-py38
       - test-app:
-          requires:
-          - pred-test-py37
-          - pred-test-py38
+          # requires:
+          # - pred-test-py37
+          # - pred-test-py38
       # - deploy-app:
       #     requires:
       #     - test-app
