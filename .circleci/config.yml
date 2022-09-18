@@ -106,6 +106,8 @@ workflows:
       #         only:
       #           - main
       - deploy-app-container:
+          requires:
+          - test-app
           filters:
             branches:
               only:
