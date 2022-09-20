@@ -70,6 +70,7 @@ jobs:
             name: Deploying the docker image on AWS
             command: |
               make build-ml-api-aws tag-ml-api-aws push-ml-api-aws
+              aws configure set region us-east-1
               aws ecs update-service --cluster my-ml-cluster --service ml-api-container-service --task-definition first-run-task-definition --force-new-deployment
 
 workflows:
