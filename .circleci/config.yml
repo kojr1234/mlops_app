@@ -65,7 +65,6 @@ jobs:
         - run:
             name: Deploying the docker image
             command: |
-              docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/udemy-ml-api:latest
               make build-ml-api-aws tag-ml-api push-ml-api-aws
               aws ecs update-service --cluster my-ml-cluster --service ml-api-container-service --task-definition first-run-task-definition --force-new-deployment
 
@@ -76,7 +75,7 @@ workflows:
       # in the classifier model...
       # - pred-test-py37
       # - pred-test-py38
-      - test-app
+      # - test-app
       # - deploy-app:
       #     requires:
       #     - test-app
@@ -92,8 +91,8 @@ workflows:
       #         only:
       #           - main
       - deploy-app-aws-ecr:
-          requires:
-          - test-app
+          # requires:
+          # - test-app
           filters:
             branches:
               only:
