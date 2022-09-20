@@ -3,8 +3,7 @@ executors:
   my-custom-executor:
     docker:
       - image: cimg/python:3.9.12
-    working_directory: ~/project
-    
+    working_directory: ~/project 
 orbs:
   aws-ecr: circleci/aws-ecr@8.1.2
 
@@ -59,9 +58,7 @@ jobs:
             make release-ml-api-heroku
 
   deploy-app-aws-ecr:
-    docker:
-        # replace with your preferred image
-        - image: python:3.9.12
+    executor: my-custom-executor
     steps:
         - aws-ecr/ecr-login:
             region: us-east-1 
