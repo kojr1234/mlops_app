@@ -4,6 +4,9 @@ executors:
     docker:
       - image: cimg/python:3.9.12
     working_directory: ~/project
+    
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2
 
 prepare_tox: &prepare_tox
   run:
@@ -55,6 +58,20 @@ jobs:
           command: |
             make release-ml-api-heroku
 
+  deploy-app-aws-ecr:
+    docker:
+        # replace with your preferred image
+        - image: python:3.9.12
+    steps:
+        - aws-ecr/ecr-login:
+            region: us-east-1 
+        - run:
+            name: Deploying the docker image
+            command: |
+              docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/udemy-ml-api:latest
+              make build-ml-api-aws tag-ml-api push-ml-api-aws
+              aws ecs update-service --cluster my-ml-cluster --service ml-api-container-service --task-definition first-run-task-definition --force-new-deployment
+
 workflows:
   my-custom-workflow:
     jobs:
@@ -70,7 +87,14 @@ workflows:
       #       branches:
       #         only:
       #           - main
-      - deploy-app-container:
+      # - deploy-app-container:
+      #     requires:
+      #     - test-app
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
+      - deploy-app-aws-ecr:
           requires:
           - test-app
           filters:
