@@ -60,6 +60,8 @@ jobs:
   deploy-app-aws-ecr:
     executor: my-custom-executor
     steps:
+        - setup_remote_docker:
+            version: 20.10.17
         - aws-ecr/ecr-login:
             region: us-east-1 
         - checkout:
