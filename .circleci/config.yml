@@ -62,6 +62,8 @@ jobs:
     steps:
         - aws-ecr/ecr-login:
             region: us-east-1 
+        - checkout:
+          path: ~/project
         - run:
             name: Deploying the docker image on AWS
             command: |
